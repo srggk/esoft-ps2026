@@ -1,0 +1,60 @@
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Проверка скобок — валидатор последовательности</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>📚 Проверка правильной последовательности скобок</h1>
+            <p class="description">
+                Алгоритм проверяет, является ли строка скобок <code>() [] {}</code> корректной.
+                Стек-решение, сложность O(n).
+            </p>
+            
+            <div class="input-section">
+                <label for="bracketInput">Введите строку со скобками:</label>
+                <input type="text" id="bracketInput" class="bracket-input" 
+                    placeholder="Например: ()[]{} или {[()]}" value="()[]{}">
+                <button id="checkBtn" class="btn-check">🔍 Проверить</button>
+            </div>
+            
+            <div id="result" class="result">
+                <!-- Результат будет отображаться здесь -->
+            </div>
+            
+            <div class="examples-section">
+                <h3>📌 Примеры для тестирования:</h3>
+                <div class="examples-grid">
+                    <div class="example-card" data-value="()">() → true ✅</div>
+                    <div class="example-card" data-value="()[]{}">()[]{} → true ✅</div>
+                    <div class="example-card" data-value="(]">(] → false ❌</div>
+                    <div class="example-card" data-value="([)]">([)] → false ❌</div>
+                    <div class="example-card" data-value="{[]}">{[]} → true ✅</div>
+                    <div class="example-card" data-value="{[()]}">{[()]} → true ✅</div>
+                    <div class="example-card" data-value="(((">((( → false ❌</div>
+                    <div class="example-card" data-value="]">] → false ❌</div>
+                    <div class="example-card" data-value="">(пусто) → true ✅</div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <h3>📝 Код алгоритма (стек)</h3>
+                <pre id="codeBlock" class="code-block"></pre>
+            </div>
+            
+            <div class="complexity">
+                <h3>⚡ Сложность алгоритма</h3>
+                <ul>
+                    <li><strong>Время:</strong> O(n) — один проход по строке</li>
+                    <li><strong>Память:</strong> O(n) — в худшем случае стек хранит все открывающие скобки</li>
+                    <li><strong>Оптимизация:</strong> ранняя проверка чётности длины строки</li>
+                </ul>
+            </div>
+        </div>
+        
+        <script src="isValidBrackets.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>

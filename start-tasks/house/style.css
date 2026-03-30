@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(145deg, #b0d4e8 0%, #7bb3cc 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* КОНТЕЙНЕР ДОМА (сцена) */
+.house {
+    position: relative;
+    width: 500px;
+    height: 520px;
+    filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.2));
+}
+
+/* ========= ОСНОВАНИЕ ========= */
+.base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    height: 280px;
+    background-color: #e7cba5;  /* основной цвет стен */
+    border: 3px solid #aa7e5a;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 0 0 4px rgba(255, 245, 215, 0.6), 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* имитация текстуры деревянных досок (вертикальные линии) */
+.base::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    right: 15px;
+    bottom: 8px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(100, 60, 30, 0.15),
+        rgba(100, 60, 30, 0.15) 2px,
+        transparent 2px,
+        transparent 24px
+    );
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+/* ========= КРЫША (ТРЕУГОЛЬНИК ЧЕРЕЗ BORDER) ========= */
+.roof {
+    position: absolute;
+    bottom: 260px;   /* основание крыши лежит на верхушке стен */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 210px solid transparent;
+    border-right: 210px solid transparent;
+    border-bottom: 150px solid #b54c3c;   /* тёплый кирпично‑красный */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* декоративная "коньковая планка" на крыше (дополнительный элемент) */
+.roof::after {
+    content: "";
+    position: absolute;
+    bottom: -150px;
+    left: -35px;
+    width: 70px;
+    height: 12px;
+    background-color: #6b3e2c;
+    border-radius: 20px;
+    transform: rotate(10deg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ========= ДЫМОХОД (прямоугольник на крыше) ========= */
+.chimney {
+    position: absolute;
+    bottom: 365px;    /* чтобы труба стояла на скате крыши */
+    left: 58%;
+    width: 48px;
+    height: 70px;
+    background-color: #9e6b42;
+    border: 2px solid #5a3a24;
+    border-radius: 8px 8px 6px 6px;
+    z-index: 5;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 2px 3px 6px rgba(0,0,0,0.2);
+}
+
+/* верхушка дымохода (имитация кирпичной кладки) */
+.chimney::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 6px;
+    width: 32px;
+    height: 10px;
+    background-color: #ba8b5a;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #5a3a24;
+}
+
+/* ========= КРУГЛОЕ ОКНО (чердачное / круглое) ========= */
+.round-window {
+    position: absolute;
+    top: 180px;      /* располагается на основании дома, чуть выше середины */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background-color: #f9e0a0;
+    border-radius: 50%;
+    border: 4px solid #7c5538;
+    box-shadow: inset 0 0 0 4px #ffefc0, 0 5px 12px rgba(0,0,0,0.2);
+    z-index: 8;
+}
+
+/* имитация стекла и блика */
+.round-window::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 18px;
+    width: 22px;
+    height: 22px;
+    background-color: rgba(255, 255, 200, 0.7);
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+/* перекрестие рамы (декоративное) */
+.window-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 4px;
+    background-color: #7c5538;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+    z-index: 9;
+}
+
+.window-cross::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 70px;
+    background-color: #7c5538;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+
+/* ========= ДОПОЛНИТЕЛЬНЫЙ ЭЛЕМЕНТ: ДВЕРЬ ========= */
+.door {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 140px;
+    background-color: #b07d48;
+    border-radius: 12px 12px 6px 6px;
+    border: 3px solid #5e3a22;
+    z-index: 10;
+    box-shadow: inset 0 2px 6px rgba(255, 230, 170, 0.6), 2px 5px 12px rgba(0,0,0,0.2);
+}
+
+/* ручка двери */
+.door::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 10px;
+    height: 10px;
+    background-color: #f3cd81;
+    border-radius: 50%;
+    border: 1px solid #8b5a2e;
+    transform: translateY(-50%);
+    box-shadow: 0 0 2px gold;
+}
+
+/* ========= ДОПОЛНИТЕЛЬНО: НАЛИЧНИК ВОКРУГ КРУГЛОГО ОКНА ========= */
+.window-trim {
+    position: absolute;
+    top: 174px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: transparent;
+    border: 6px solid #e0b079;
+    box-sizing: border-box;
+    z-index: 7;
+    pointer-events: none;
+    box-shadow: 0 0 0 2px #fce5b4;
+}
+
+/* ========= ДЛЯ АТМОСФЕРЫ ========= */
+.grass {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background: repeating-linear-gradient(45deg, #5f8b4c, #5f8b4c 18px, #7fb073 18px, #7fb073 36px);
+    border-radius: 30px 30px 0 0;
+    z-index: 2;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+}
+
+/* маленький кустик рядом с домом */
+.bush {
+    position: absolute;
+    bottom: -2px;
+    left: 20px;
+    width: 55px;
+    height: 45px;
+    background: radial-gradient(circle, #437a2c, #2f5a1f);
+    border-radius: 70% 30% 60% 40%;
+    filter: blur(2px);
+    opacity: 0.9;
+    z-index: 1;
+}
+.bush2 {
+    left: auto;
+    right: 15px;
+    width: 65px;
+    height: 50px;
+    border-radius: 40% 60% 35% 65%;
+}
+
+/* облачко */
+.cloud {
+    position: absolute;
+    top: -40px;
+    right: 20px;
+    width: 100px;
+    height: 55px;
+    background: #f9f9fc;
+    border-radius: 80px;
+    filter: blur(8px);
+    opacity: 0.8;
+    z-index: 0;
+}
+.cloud:before, .cloud:after {
+    content: '';
+    position: absolute;
+    background: #f9f9fc;
+    border-radius: 50%;
+}
+.cloud:before {
+    width: 48px;
+    height: 48px;
+    top: -20px;
+    left: 12px;
+}
+.cloud:after {
+    width: 60px;
+    height: 60px;
+    top: -28px;
+    left: 45px;
+}
+
+/* адаптивность — на маленьких экранах просто масштабируем */
+@media (max-width: 580px) {
+    .house { transform: scale(0.85); }
+    body { padding: 20px; }
+}
