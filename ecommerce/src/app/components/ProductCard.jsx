@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from './ui-elements/Button';
+import QuantityControls from './ui-elements/QuantityControls';
 
-function ProductCard({ product }) {
+function ProductCard({ product, cart, setCart }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
   
+  const cartQuantity = cart[product.id] || 0;
   const hasMultipleImages = product.images && product.images.length > 1;
   const imageCount = product.images?.length || 0;
 
@@ -29,18 +30,29 @@ function ProductCard({ product }) {
   };
 
   const addToCart = () => {
-    setCartCount(1);
+    setCart(prev => ({
+      ...prev,
+      [product.id]: 1
+    }));
   };
 
   const incrementCart = () => {
-    setCartCount(prev => prev + 1);
+    setCart(prev => ({
+      ...prev,
+      [product.id]: (prev[product.id] || 0) + 1
+    }));
   };
 
   const decrementCart = () => {
-    if (cartCount === 1) {
-      setCartCount(0);
+    if (cartQuantity === 1) {
+      const newCart = { ...cart };
+      delete newCart[product.id];
+      setCart(newCart);
     } else {
-      setCartCount(prev => prev - 1);
+      setCart(prev => ({
+        ...prev,
+        [product.id]: prev[product.id] - 1
+      }));
     }
   };
 
@@ -95,12 +107,6 @@ function ProductCard({ product }) {
             </>
             )}
 
-            {/* Image Counter Indicator */}
-            {/* {hasMultipleImages && (
-            <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                {currentImageIndex + 1} / {imageCount}
-            </div>
-            )} */}
             {hasMultipleImages && (
                 <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
                     {Array.from({ length: imageCount }).map((_, index) => (
@@ -108,8 +114,8 @@ function ProductCard({ product }) {
                             key={index}
                             className={`transition-all ${
                                 currentImageIndex === index
-                                    ? 'bg-gray-700 w-6 h-2 rounded-full'  // Чёрный овал
-                                    : 'bg-white w-2 h-2 rounded-full'  // Белый круг
+                                    ? 'bg-gray-700 w-6 h-2 rounded-full'
+                                    : 'bg-white w-2 h-2 rounded-full'
                                 }`
                             }
                         />
@@ -135,22 +141,17 @@ function ProductCard({ product }) {
 
             {/* Button (Cart / Counter) */}
             <div className="flex items-center gap-3 mt-auto">
-                {cartCount === 0 ? (
+                {cartQuantity === 0 ? (
                     <Button onClick={addToCart} isFullWeight={true} variant="dark">
                         Add to Cart
                     </Button>
                 ) : (
-                    <div className="flex-1 flex items-center justify-between">
-                        <Button onClick={decrementCart} isIconOnly={true}>
-                            <FontAwesomeIcon icon="fa-solid fa-minus" className='text-gray-700 text-lg' />
-                        </Button>
-
-                        <span className="text-sm font-medium">{cartCount} in cart</span>
-
-                        <Button onClick={incrementCart} isIconOnly={true} variant="dark">
-                            <FontAwesomeIcon icon="fa-solid fa-plus" className='text-white text-lg' />
-                        </Button>
-                    </div>
+                    <QuantityControls
+                        onClickLeft={decrementCart}
+                        onClickRight={incrementCart}
+                        quantityText={`${cartQuantity} in cart`}
+                        className="w-full justify-between"
+                    />
                 )}
             </div>
         </div>

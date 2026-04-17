@@ -1,16 +1,8 @@
 import './App.css'
-import Home from './pages/Home'
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Container from './components/Container';
 
 function App() {
-  return (
-    <>
-      <Header selectedCategory="tv" />
-      <Home />
-      <Footer />
-    </>
-  );
+  return <Container />;
 }
 
 export default App;

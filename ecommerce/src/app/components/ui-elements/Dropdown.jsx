@@ -10,7 +10,7 @@ function Dropdown({
             <select
                 value={value}
                 onChange={onChange || undefined}
-                className="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-600 appearance-none"
+                className="w-full ps-3 pe-10 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-600 appearance-none cursor-pointer"
             >
                 {options.map(option => (
                     <option key={option.value || option} value={option.value || option}>
