@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const INITIAL_TIME = 60 * 60 - 1;
 
-function SpecialDealTimer() {
-    const [showTimer, setShowTimer] = useState(true);
+function SpecialDealTimer({ onClose }) {
     const [timeLeft, setTimeLeft] = useState(INITIAL_TIME);
     const [isRunning, setIsRunning] = useState(true);
     const [isExpired, setIsExpired] = useState(false);
@@ -56,16 +55,13 @@ function SpecialDealTimer() {
         }
     };
 
-    if (!showTimer)
-        return null;
-
     return (
         <div className="bg-gradient-to-r from-red-700 to-red-600 rounded-lg p-4 text-white flex flex-col gap-2 relative">
             <Button
                 isIconOnly={true}
                 className="absolute top-2 right-2"
                 variant="light"
-                onClick={() => setShowTimer(false)}
+                onClick={onClose}
             >
                 <FontAwesomeIcon icon="fa-solid fa-xmark" className='text-white hover:text-gray-200 text-md' />
             </Button>

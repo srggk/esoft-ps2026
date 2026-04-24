@@ -1,11 +1,16 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "./ui-elements/Button";
 import Dropdown from "./ui-elements/Dropdown";
 import FilterGroup from "./ui-elements/FilterGroup";
 import Input from "./ui-elements/Input";
 import SpecialDealTimer from "./SpecialDealTimer";
+import WeatherWidget from "./WeatherWidget";
 
 function Sidebar({ brands, filters, setFilters, onApply }) {
+    const [isSpecialDealTimerVisible, setIsSpecialDealTimerVisible] = useState(true);
+    const [isWeatherWidgetVisible, setIsWeatherWidgetVisible] = useState(true);
+
     return (
         <aside className="lg:w-64 flex-shrink-0">
             <div className="sticky top-24 flex flex-col gap-4">
@@ -47,7 +52,13 @@ function Sidebar({ brands, filters, setFilters, onApply }) {
                     </Button>
                 </div>
 
-                <SpecialDealTimer />
+                {isSpecialDealTimerVisible && (
+                    <SpecialDealTimer onClose={() => { setIsSpecialDealTimerVisible(false) }} />
+                )}
+
+                {isWeatherWidgetVisible && (
+                    <WeatherWidget onClose={() => { setIsWeatherWidgetVisible(false) }} />
+                )}
             </div>
         </aside>
     );
