@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "./ui-elements/Button";
 import Dropdown from "./ui-elements/Dropdown";
 import FilterGroup from "./ui-elements/FilterGroup";
 import Input from "./ui-elements/Input";
+import SpecialDealTimer from "./SpecialDealTimer";
+import WeatherWidget from "./WeatherWidget";
 
 function Sidebar({ brands, filters, setFilters, onApply }) {
+    const [isSpecialDealTimerVisible, setIsSpecialDealTimerVisible] = useState(true);
+    const [isWeatherWidgetVisible, setIsWeatherWidgetVisible] = useState(true);
+
     return (
         <aside className="lg:w-64 flex-shrink-0">
             <div className="sticky top-24 flex flex-col gap-4">
@@ -46,24 +52,13 @@ function Sidebar({ brands, filters, setFilters, onApply }) {
                     </Button>
                 </div>
 
-                {/* Special Deal Banner */}
-                <div className="bg-gradient-to-r from-red-700 to-red-600 rounded-lg p-4 text-white flex flex-col gap-2 relative">
-                    {/* Close Banner Button */}
-                    <Button isIconOnly={true} className="absolute top-2 right-2" variant="light">
-                        <FontAwesomeIcon icon="fa-solid fa-xmark" className='text-white hover:text-gray-200 text-md' />
-                    </Button>
+                {isSpecialDealTimerVisible && (
+                    <SpecialDealTimer onClose={() => { setIsSpecialDealTimerVisible(false) }} />
+                )}
 
-                    {/* Banner Elements */}
-                    <div className="flex flex-row gap-2 items-center">
-                        <FontAwesomeIcon icon="fa-solid fa-clock" className='text-md' />
-                        <h3 className="text-xl font-medium">Special Deal!</h3>
-                    </div>
-                    <p className="font-extralight mb-3">Register now to unlock exclusive offers and discounts</p>
-                    <div className="flex flex-row items-center justify-between gap-4">
-                        <p className="font-extralight">Offer expires in:</p>
-                        <p className="text-md font-mono font-bold">00:59:59</p>
-                    </div>
-                </div>
+                {isWeatherWidgetVisible && (
+                    <WeatherWidget onClose={() => { setIsWeatherWidgetVisible(false) }} />
+                )}
             </div>
         </aside>
     );

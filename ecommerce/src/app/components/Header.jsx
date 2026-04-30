@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from './ui-elements/Button';
+import LoginModal from '../components/modals/LoginModal'
 
 function Header({ pageType = 'tv', setPageType, cart = {} }) {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   const categories = [
     { id: "tv", label: "TV" },
     { id: "phone", label: "Phone" },
     { id: "laptop", label: "Laptop" }
   ];
-
   const totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
 
   return (
@@ -61,6 +64,7 @@ function Header({ pageType = 'tv', setPageType, cart = {} }) {
           <Button
             isIconOnly={true}
             variant="light"
+            onClick={() => setIsLoginModalOpen(true)}
           >
             <FontAwesomeIcon icon="fa-solid fa-user" className="text-gray-700 hover:text-gray-900 text-lg" />
           </Button>
@@ -87,6 +91,11 @@ function Header({ pageType = 'tv', setPageType, cart = {} }) {
           </div>
         )}
       </div>
+
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
     </header>
   );
 }

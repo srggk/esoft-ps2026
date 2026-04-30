@@ -6,6 +6,7 @@ function Button({
     onClick=null,
     isFullWeight=false,
     isIconOnly=false,
+    isDisabled=false,
     className = '',
 }) {
     const variantStyles = {
@@ -27,11 +28,13 @@ function Button({
         <button
             type={isSubmit ? "submit" : "button"}
             onClick={onClick || undefined}
+            disabled={isDisabled}
             className={`font-medium rounded-lg transition
                 ${isFullWeight ? "w-full" : "w-auto"}
                 ${isIconOnly && "aspect-square"}
                 ${variantStyles[variant]}
                 ${sizeStyles[size]}
+                ${isDisabled && "opacity-50 cursor-not-allowed"}
                 ${className}`
             }
         >
